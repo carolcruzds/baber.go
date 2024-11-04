@@ -1,6 +1,6 @@
 # Projeto Barber Go
 ## Startups e Negócios Digitais
-####Equipe:
+Equipe:
 - Brenda Mendes
 - Breno de Souza
 - Carolina Cruz
