@@ -1,0 +1,176 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    background-color: #d8f0ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    width: 850px;
+    max-width: 100%;
+    min-height: 480px;
+    position: relative;
+}
+
+
+.form-container {
+    padding: 2rem;
+    width: 50%;
+}
+
+.sign-in-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Alinha os itens centralizados */
+}
+
+input[type="email"],
+input[type="password"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    width: 80%;
+}
+
+button {
+    border-radius: 20px;
+    border: 1px solid #007acc;
+    background-color: #007acc;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #005f99;
+}
+
+.overlay-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    overflow: hidden;
+    border-radius: 0 50px 50px 0; /* Arredonda os cantos direito da parte geral */
+}
+
+.overlay {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: #ffffff;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 50px 0 0 50px; /* Arredonda os cantos esquerdo da parte azul */
+}
+
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+
+
+.overlay-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    text-align: center;
+    height: 100%; /* Garante que a altura seja total para centralização */
+    padding: 0 2rem; /* Ajusta o padding para evitar que o conteúdo encoste nas bordas */
+}
+
+
+.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+}
+
+.social-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaçamento entre os ícones */
+    margin: 5px 30px 15px -30px;
+}
+
+.social img {
+    border-radius: 50%; /* Borda arredondada */
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    border: 2px solid #ddd; /* Borda ao redor do ícone */
+    transition: transform 0.3s;
+}
+
+.social img:hover {
+    transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+}
+
+button {
+    margin-top: 30px;
+    }
+
+.link {
+    font-size: small;
+}
+#Entrar{
+    text-align: center;
+    margin-right: 50px;
+}
+
+span {
+    font-size: medium;
+    color: grey;
+    display: block; /* Permite que o elemento ocupe toda a largura */
+    text-align: center; /* Centraliza o texto */
+    margin: 10px 58px 10px 0; /* Adiciona espaçamento acima e abaixo */
+}
+
+img {
+    width: 50%;
+    padding: auto;
+    size: 1%;
+
+}
+
+h1{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+#imagem {
+    margin-top: -20px;
+}
+
+#entrar{
+
+    text-decoration: none;
+    color: white;
+}

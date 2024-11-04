@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente - Barber.go</title>
+    <link rel="stylesheet" href="style/cliente.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_API_KEY"></script> <!-- Adicione sua API Key -->
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Barbeiros Disponíveis</h1>
+        </header>
+
+        <div class="filter-section">
+            <div class="date-turno-container">
+                <label for="filter-date">Data:</label>
+                <input type="date" id="filter-date">
+                <label for="filter-turno">Turno:</label>
+                <select id="filter-turno">
+                    <option value="">Escolha o turno</option>
+                    <option value="manha">Manhã</option>
+                    <option value="tarde">Tarde</option>
+                    <option value="noite">Noite</option>
+                </select>
+            </div>
+
+            <div class="location-container">
+                <label for="filter-location">Localização:</label>
+                <select id="filter-location">
+                    <option value="">Escolha o bairro</option>
+                    <option value="bairro1">Bairro 1</option>
+                    <option value="bairro2">Bairro 2</option>
+                    <option value="bairro3">Bairro 3</option>
+                    <!-- Adicione outros bairros da zona sul -->
+                </select>
+            </div>
+
+            <div class="price-rating-container">
+                <label for="filter-price">Preço máximo:</label>
+                <input type="number" placeholder="Preço máximo" id="filter-price">
+
+                <label for="filter-rating">Classificação:</label>
+                <select id="filter-rating">
+                    <option value="">Classificação</option>
+                    <option value="5">5 estrelas</option>
+                    <option value="4">4 estrelas</option>
+                    <option value="3">3 estrelas</option>
+                </select>
+            </div>
+
+            <div class="button-container">
+                <button type="button" onclick="filterBarbers()">Filtrar</button>
+                <button type="button" onclick="findNearby()">Próximo a mim</button>
+            </div>
+        </div>
+
+        <div id="map" class="map"></div>
+
+        <div class="barber-list">
+            <!-- Exemplo de Card de Barbeiro -->
+            <div class="barber-card">
+                <img src="img/barber1.jpg" alt="Barbeiro">
+                <div class="barber-info">
+                    <h2>Nome do Barbeiro</h2>
+                    <p>Localização: Bairro X</p>
+                    <p>Preço médio: R$50 - R$150</p>
+                    <p>Classificação: ★★★★☆ (4/5)</p>
+                </div>
+                <div class="barber-actions">
+                    <button onclick="viewPortfolio('barber1')">Ver Portfólio</button>
+                    <button onclick="scheduleAppointment('barber1')">Agendar</button>
+                </div>
+            </div>
+            <!-- Repetir a estrutura para outros barbeiros -->
+        </div>
+    </div>
+
+    <!-- Modal para Agendamento -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Agendar Serviço</h2>
+            <label for="service">Escolha o serviço:</label>
+            <select id="service">
+                <option value="haircut">Corte de Cabelo - R$50</option>
+                <option value="beard">Barba - R$30</option>
+                <option value="haircut-beard">Corte e Barba - R$70</option>
+            </select>
+            <label for="date">Data:</label>
+            <input type="date" id="date" required>
+            <label for="time">Horário:</label>
+            <input type="time" id="time" required>
+            <button type="submit">Confirmar Agendamento</button>
+        </div>
+    </div>
+
+    <script>
+        function viewPortfolio(barberId) {
+            alert('Portfólio do ' + barberId);
+        }
+
+        function scheduleAppointment(barberId) {
+            document.getElementById('scheduleModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function findNearby() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    alert(`Sua localização é: Latitude ${latitude}, Longitude ${longitude}`);
+                });
+            } else {
+                alert('Geolocalização não é suportada pelo seu navegador.');
+            }
+        }
+
+        function initMap() {
+            const mapOptions = {
+                center: { lat: -23.561684, lng: -46.625378 },
+                zoom: 12
+            };
+            const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+</html>
