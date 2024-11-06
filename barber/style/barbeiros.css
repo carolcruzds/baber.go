@@ -163,3 +163,12 @@ footer {
     font-size: 14px;
     margin-top: 30px;
 }
+
+/* Estilo para a foto do barbeiro no perfil */
+.barber-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
