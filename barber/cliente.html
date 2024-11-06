@@ -1,135 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cliente - Barber.go</title>
+    <title>Cliente - Barber.Go</title>
     <link rel="stylesheet" href="style/cliente.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_API_KEY"></script> <!-- Adicione sua API Key -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script>
+        function toggleScheduleForm(barberId) {
+            const form = document.getElementById(`schedule-form-${barberId}`);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        function filterBarbers() {
+            const locationInput = document.getElementById("location").value.toLowerCase();
+            const barberCards = document.querySelectorAll(".barber-card");
+            
+            barberCards.forEach(card => {
+                const barberLocation = card.getAttribute("data-location").toLowerCase();
+                if (locationInput && barberLocation.includes(locationInput)) {
+                    card.style.display = "block";
+                } else if (locationInput) {
+                    card.style.display = "none";
+                } else {
+                    card.style.display = "block";
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>Barbeiros Disponíveis</h1>
-        </header>
-
-        <div class="filter-section">
-            <div class="date-turno-container">
-                <label for="filter-date">Data:</label>
-                <input type="date" id="filter-date">
-                <label for="filter-turno">Turno:</label>
-                <select id="filter-turno">
-                    <option value="">Escolha o turno</option>
-                    <option value="manha">Manhã</option>
-                    <option value="tarde">Tarde</option>
-                    <option value="noite">Noite</option>
-                </select>
+    <header>
+        <div class="header-content">
+            <img src="img/barber.png" alt="Logo Barber.Go" class="logo">
+            <div class="topo">
+                <p>Encontre o melhor barbeiro perto de você!</p>
             </div>
-
-            <div class="location-container">
-                <label for="filter-location">Localização:</label>
-                <select id="filter-location">
-                    <option value="">Escolha o bairro</option>
-                    <option value="bairro1">Bairro 1</option>
-                    <option value="bairro2">Bairro 2</option>
-                    <option value="bairro3">Bairro 3</option>
-                    <!-- Adicione outros bairros da zona sul -->
-                </select>
-            </div>
-
-            <div class="price-rating-container">
-                <label for="filter-price">Preço máximo:</label>
-                <input type="number" placeholder="Preço máximo" id="filter-price">
-
-                <label for="filter-rating">Classificação:</label>
-                <select id="filter-rating">
-                    <option value="">Classificação</option>
-                    <option value="5">5 estrelas</option>
-                    <option value="4">4 estrelas</option>
-                    <option value="3">3 estrelas</option>
-                </select>
-            </div>
-
-            <div class="button-container">
-                <button type="button" onclick="filterBarbers()">Filtrar</button>
-                <button type="button" onclick="findNearby()">Próximo a mim</button>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar barbeiros...">
+                <button type="button">🔍</button>
             </div>
         </div>
-
-        <div id="map" class="map"></div>
-
-        <div class="barber-list">
-            <!-- Exemplo de Card de Barbeiro -->
-            <div class="barber-card">
-                <img src="img/barber1.jpg" alt="Barbeiro">
-                <div class="barber-info">
-                    <h2>Nome do Barbeiro</h2>
-                    <p>Localização: Bairro X</p>
-                    <p>Preço médio: R$50 - R$150</p>
-                    <p>Classificação: ★★★★☆ (4/5)</p>
-                </div>
-                <div class="barber-actions">
-                    <button onclick="viewPortfolio('barber1')">Ver Portfólio</button>
-                    <button onclick="scheduleAppointment('barber1')">Agendar</button>
-                </div>
+    </header>
+    
+    <main class="container">
+        <section class="search-filters">
+            <h2>Filtrar Barbeiros</h2>
+            <form oninput="filterBarbers()">
+                <label for="location">Localização:</label>
+                <input type="text" id="location" placeholder="Digite sua localização">
+                
+                <label for="price">Faixa de preço:</label>
+                <select id="price">
+                    <option value="all">Todos</option>
+                    <option value="low">Até R$50</option>
+                    <option value="medium">R$50 - R$100</option>
+                    <option value="high">Acima de R$100</option>
+                </select>
+                
+                <label for="date">Data:</label>
+                <input type="date" id="date">
+                
+                <label for="time">Hora:</label>
+                <input type="time" id="time">
+                
+                <button type="button" onclick="filterBarbers()">Buscar</button>
+            </form>
+        </section>
+        
+<section class="top-barbers">
+    <div class="barber-card" data-location="Botafogo">
+        <div class="barber-info">
+            <img src="img/barber1.png" alt="Foto do Barbeiro 1" class="barber-photo">
+            <div class="barber-details">
+                <h3>João Silva</h3>
+                <p>Localização: Botafogo</p>
+                <p>Classificação: ⭐⭐⭐⭐☆</p>
+                <p>Portfólio: <a href="#">Ver mais</a></p>
+                <p>Valores: Corte - R$50, Barba - R$30, Corte e Barba - R$70</p>
+                <button onclick="toggleScheduleForm(1)">Agendar</button>
             </div>
-            <!-- Repetir a estrutura para outros barbeiros -->
         </div>
-    </div>
+        <div id="schedule-form-1" class="schedule-form" style="display: none;">
+            <label for="date-1">Data:</label>
+            <input type="date" id="date-1">
+            <label for="time-1">Horário:</label>
+            <input type="time" id="time-1">
+            <button type="submit">Confirmar Agendamento</button>
+        </div>
+    </div> 
 
-    <!-- Modal para Agendamento -->
-    <div id="scheduleModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Agendar Serviço</h2>
-            <label for="service">Escolha o serviço:</label>
-            <select id="service">
-                <option value="haircut">Corte de Cabelo - R$50</option>
-                <option value="beard">Barba - R$30</option>
-                <option value="haircut-beard">Corte e Barba - R$70</option>
-            </select>
-            <label for="date">Data:</label>
-            <input type="date" id="date" required>
-            <label for="time">Horário:</label>
-            <input type="time" id="time" required>
+    <div class="barber-card" data-location="Ipanema">
+        <div class="barber-info">
+            <img src="img/barber2.png" alt="Foto do Barbeiro 2" class="barber-photo">
+            <div class="barber-details">
+                <h3>Carlos Pereira</h3>
+                <p>Localização: Ipanema</p>
+                <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                <p>Portfólio: <a href="#">Ver mais</a></p>
+                <p>Valores: Corte - R$60, Barba - R$40, Corte e Barba - R$90</p>
+                <button onclick="toggleScheduleForm(2)">Agendar</button>
+            </div>
+        </div>
+        <div id="schedule-form-2" class="schedule-form" style="display: none;">
+            <label for="date-2">Data:</label>
+            <input type="date" id="date-2">
+            <label for="time-2">Horário:</label>
+            <input type="time" id="time-2">
+            <button type="submit">Confirmar Agendamento</button>
+        </div>
+    </div> 
+
+    <div class="barber-card" data-location="Copacabana">
+        <div class="barber-info">
+            <img src="img/barber3.png" alt="Foto do Barbeiro 3" class="barber-photo">
+            <div class="barber-details">
+                <h3>Luiz Almeida</h3>
+                <p>Localização: Copacabana</p>
+                <p>Classificação: ⭐⭐⭐⭐☆</p>
+                <p>Portfólio: <a href="#">Ver mais</a></p>
+                <p>Valores: Corte - R$55, Barba - R$35, Corte e Barba - R$80</p>
+                <button onclick="toggleScheduleForm(3)">Agendar</button>
+            </div>
+        </div>
+        <div id="schedule-form-3" class="schedule-form" style="display: none;">
+            <label for="date-3">Data:</label>
+            <input type="date" id="date-3">
+            <label for="time-3">Horário:</label>
+            <input type="time" id="time-3">
+            <button type="submit">Confirmar Agendamento</button>
+        </div>
+    </div> 
+
+    <div class="barber-card" data-location="Leblon">
+        <div class="barber-info">
+            <img src="img/barber4.png" alt="Foto do Barbeiro 4" class="barber-photo">
+            <div class="barber-details">
+                <h3>Pedro Ramos</h3>
+                <p>Localização: Leblon</p>
+                <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                <p>Portfólio: <a href="#">Ver mais</a></p>
+                <p>Valores: Corte - R$65, Barba - R$40, Corte e Barba - R$100</p>
+                <button onclick="toggleScheduleForm(4)">Agendar</button>
+            </div>
+        </div>
+        <div id="schedule-form-4" class="schedule-form" style="display: none;">
+            <label for="date-4">Data:</label>
+            <input type="date" id="date-4">
+            <label for="time-4">Horário:</label>
+            <input type="time" id="time-4">
             <button type="submit">Confirmar Agendamento</button>
         </div>
     </div>
-
-    <script>
-        function viewPortfolio(barberId) {
-            alert('Portfólio do ' + barberId);
-        }
-
-        function scheduleAppointment(barberId) {
-            document.getElementById('scheduleModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('scheduleModal').style.display = 'none';
-        }
-
-        function findNearby() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    alert(`Sua localização é: Latitude ${latitude}, Longitude ${longitude}`);
-                });
-            } else {
-                alert('Geolocalização não é suportada pelo seu navegador.');
-            }
-        }
-
-        function initMap() {
-            const mapOptions = {
-                center: { lat: -23.561684, lng: -46.625378 },
-                zoom: 12
-            };
-            const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        }
-
-        window.onload = initMap;
-    </script>
+</section>
+    </main>
 </body>
+<footer>
+    <p>&copy; 2024 Barber.Go. Todos os direitos reservados.</p>
+</footer>
 </html>
