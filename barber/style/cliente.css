@@ -6,13 +6,13 @@ body {
     padding: 0;
 }
 
-/* Resto do CSS permanece o mesmo */
-
+/* Header */
 header {
     background-color: #007acc;
     color: #fff;
     padding: 20px 0;
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -26,39 +26,55 @@ header {
     height: 50px;
 }
 
+/* Search Bar */
 .search-bar {
     display: flex;
     align-items: center;
 }
 
 .search-bar input {
-    padding: 5px;
-    border: none;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
     outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #007acc;
 }
 
 .search-bar button {
-    padding: 5px 10px;
+    padding: 10px 15px;
     background-color: #fff;
-    border: none;
+    border: 1px solid #007acc;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.search-bar button:hover {
+    background-color: #e6f7ff;
+}
+
+/* Main Container */
 main.container {
     margin: 0 auto;
     max-width: 1200px;
     padding: 20px;
 }
 
-.search-filters, .top-barbers {
+/* Search Filters and Top Barbers */
+.search-filters,
+.top-barbers {
     background-color: #e6f7ff;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Barber Card */
 .barber-card {
     display: flex;
     flex-direction: column;
@@ -79,8 +95,8 @@ main.container {
 .barber-photo {
     width: 100px;
     height: 100px;
-    border-radius: 15px; /* Borda arredondada */
-    object-fit: cover; /* Garante que a imagem seja cortada para se ajustar */
+    border-radius: 15px;
+    object-fit: cover;
 }
 
 .barber-details {
@@ -96,27 +112,34 @@ main.container {
     margin: 5px 0;
 }
 
-    
+/* Schedule Form */
 .schedule-form {
     margin-top: 10px;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .schedule-form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #007acc;
 }
 
 .schedule-form input {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.schedule-form input:focus {
+    border-color: #007acc;
 }
 
 .schedule-form button {
@@ -126,12 +149,14 @@ main.container {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .schedule-form button:hover {
-    background-color: #007acc;
+    background-color: #005ea1;
 }
 
+/* Footer */
 footer {
     background-color: #007acc;
     color: #fff;
@@ -139,5 +164,153 @@ footer {
     padding: 1rem;
     margin-top: auto;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Label */
+.search-label {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
     position: relative;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    overflow: hidden;
+ background: #e6f7ff;
+    padding: 9px;
+    cursor: text;
+    color: #333;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.search-label:hover {
+    border-color: #007acc;
+}
+
+.search-label:focus-within {
+    background: #d8efff;
+    border-color: #007acc;
+}
+
+.search-label input {
+    outline: none;
+    width: 100%;
+    border: none;
+    background: none;
+    color: #333;
+}
+
+.search-label svg,
+.slash-icon {
+    position: absolute;
+    color: #007acc;
+}
+
+.search-icon {
+    display: none;
+    width: 12px;
+    height: auto;
+}
+
+.slash-icon {
+    right: 7px;
+    border: 1px solid #b3e0ff;
+    background: linear-gradient(-225deg, #e0f2ff, #b3e0ff);
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    width: 15px;
+    color: #333;
+}
+
+.slash-icon:active {
+    color: transparent;
+}
+
+/* Styled Button */
+button {
+    height: 50px;
+    margin: 5px;
+    width: 120px;
+    background: #007acc;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    border: solid #005ea1 1px;
+    font-size: 16px;
+    color: #fff;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #005ea1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #f0f8ff;
+}
+
+button:active {
+    background-color: #004a8f;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: #e6f7ff;
+}
+
+/* Label Adjustments */
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #007acc;
+    font-size: 14px;
+}
+
+/* Select Adjustments */
+select {
+    width: 100%;
+    padding: 6px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #b3e0ff;
+    border-radius: 6px;
+    background-color: #e6f7ff;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Date and Time Inputs */
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    padding: 6px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #b3e0ff;
+    border-radius: 6px;
+    background-color: #e6f7ff;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Button Adjustments */
+button {
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #005fa3;
 }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Barbeiro - Barber.Go</title>
+    <link rel="stylesheet" href="style/barbeiros.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="img/barber.png" alt="Logo Barber.Go" class="logo">
+            <div class="top-bar">
+                <div class="profile">
+                    <p>Bem-vindo, <strong>Barbeiro João</strong></p>
+                    <p><a href="#">Sair</a></p>
+                </div>
+                <div class="info">
+                    <p>Saldo Total (após desconto): R$<span id="total-ganhos">0,00</span></p>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="overview">
+            <h2>Seus Clientes</h2>
+            <p>Acompanhe seus clientes, veja o total de ganhos e detalhes dos serviços realizados.</p>
+        </section>
+        
+        <section class="customers-list">
+            <!-- Exemplo de Cliente -->
+            <div class="customer-card">
+                <div class="customer-info">
+                    <h3>Ricardo Silva</h3>
+                    <p>Localização: Botafogo</p>
+                    <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                    <p>Total Gasto no Mês: R$150</p>
+                </div>
+                <table class="service-table">
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Data</th>
+                            <th>Preço</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Corte</td>
+                            <td>05/10/2023</td>
+                            <td>R$50</td>
+                        </tr>
+                        <tr>
+                            <td>Barba</td>
+                            <td>10/10/2023</td>
+                            <td>R$30</td>
+                        </tr>
+                        <tr>
+                            <td>Corte e Barba</td>
+                            <td>15/10/2023</td>
+                            <td>R$70</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Adicionar mais cards de clientes conforme necessário -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Barber.Go. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Calcular o total de ganhos descontando R$10 por corte
+        function calcularGanhos() {
+            const servicos = [
+                { cliente: "Ricardo Silva", servicos: [{ preco: 50 }, { preco: 30 }, { preco: 70 }] },
+                { cliente: "Pedro Araujo", servicos: [{ preco: 60 }, { preco: 40 }] },
+                { cliente: "Filipe Tavares", servicos: [{ preco: 55 }, { preco: 35 }, { preco: 110 }] }
+            ];
+
+            let total = 0;
+            servicos.forEach(cliente => {
+                cliente.servicos.forEach(servico => {
+                    total += servico.preco - 10; // Subtrai R$10 de cada corte
+                });
+            });
+
+            document.getElementById("total-ganhos").textContent = total.toFixed(2);
+        }
+
+        // Chamar a função ao carregar a página
+        window.onload = calcularGanhos;
+    </script>
+</body>
+</html>

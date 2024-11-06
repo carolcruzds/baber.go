@@ -1,0 +1,165 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Estilos gerais */
+body {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 50px;
+    margin-right: 20px;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.profile, .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.profile p {
+    font-size: 14px;
+}
+
+.profile a {
+    color: #ff6347;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
+.info p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4caf50;
+}
+
+/* Main container */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Overview */
+.overview {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.overview h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.overview p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Customer list and cards */
+.customers-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.customer-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.customer-card:hover {
+    transform: translateY(-5px);
+}
+
+.customer-info {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.customer-info h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.customer-info p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Table for services */
+.service-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.service-table th,
+.service-table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.service-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    color: #333;
+}
+
+.service-table td {
+    background-color: #fff;
+    color: #666;
+}
+
+.service-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 30px;
+}
