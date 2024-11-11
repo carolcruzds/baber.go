@@ -1,8 +1,6 @@
 body {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
     background-color: #d8f0ff;
     display: flex;
     justify-content: center;
@@ -20,8 +18,8 @@ body {
     max-width: 100%;
     min-height: 480px;
     position: relative;
+    flex-direction: row;
 }
-
 
 .form-container {
     padding: 2rem;
@@ -32,7 +30,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Alinha os itens centralizados */
+    align-items: center;
 }
 
 input[type="email"],
@@ -68,10 +66,11 @@ button:hover {
     width: 50%;
     height: 100%;
     text-align: center;
-    align-items: center; /* Centraliza os itens horizontalmente */
-    justify-content: center; /* Centraliza os itens verticalmente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    border-radius: 0 50px 50px 0; /* Arredonda os cantos direito da parte geral */
+    border-radius: 0 50px 50px 0;
 }
 
 .overlay {
@@ -80,7 +79,7 @@ button:hover {
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: 50px 0 0 50px; /* Arredonda os cantos esquerdo da parte azul */
+    border-radius: 50px 0 0 50px;
 }
 
 .overlay-content {
@@ -93,18 +92,15 @@ button:hover {
     padding: 0 2rem;
 }
 
-
-
 .overlay-panel {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    height: 100%; /* Garante que a altura seja total para centralização */
-    padding: 0 2rem; /* Ajusta o padding para evitar que o conteúdo encoste nas bordas */
+    height: 100%;
+    padding: 0 2rem;
 }
-
 
 .ghost {
     background-color: transparent;
@@ -114,31 +110,28 @@ button:hover {
 .social-container {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Espaçamento entre os ícones */
+    gap: 15px;
     margin: 5px 30px 15px -30px;
 }
 
 .social img {
-    border-radius: 50%; /* Borda arredondada */
+    border-radius: 50%;
     width: 50px;
     height: 50px;
     padding: 5px;
-    border: 2px solid #ddd; /* Borda ao redor do ícone */
+    border: 2px solid #ddd;
     transition: transform 0.3s;
 }
 
 .social img:hover {
-    transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+    transform: scale(1.1);
 }
-
-button {
-    margin-top: 30px;
-    }
 
 .link {
     font-size: small;
 }
-#Entrar{
+
+#Entrar {
     text-align: center;
     margin-right: 50px;
 }
@@ -146,31 +139,24 @@ button {
 span {
     font-size: medium;
     color: grey;
-    display: block; /* Permite que o elemento ocupe toda a largura */
-    text-align: center; /* Centraliza o texto */
-    margin: 10px 58px 10px 0; /* Adiciona espaçamento acima e abaixo */
+    display: block;
+    text-align: center;
+    margin: 10px 58px 10px 0;
 }
 
 img {
     width: 50%;
-    padding: auto;
-    size: 1%;
-
 }
 
-h1{
+h1 {
     font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
 }
 
 #imagem {
     margin-top: -20px;
 }
 
-#entrar{
-
+#entrar {
     text-decoration: none;
     color: white;
 }
@@ -183,4 +169,62 @@ footer {
     margin-top: auto;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .form-container, .overlay-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .overlay-container {
+        position: static;
+        border-radius: 50px;
+        margin-top: 20px;
+    }
+
+    .overlay {
+        border-radius: 50px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+    }
+    
+    button {
+        width: 100%;
+    }
+
+    .social-container {
+        gap: 10px;
+        margin: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .overlay-content,
+    .form-container {
+        padding: 1rem;
+    }
 }

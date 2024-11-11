@@ -91,7 +91,7 @@
             let total = 0;
             servicos.forEach(cliente => {
                 cliente.servicos.forEach(servico => {
-                    total += servico.preco - 10; // Subtrai R$10 de cada corte
+                    total += servico.preco - servico.preco * 15 / 100; // Subtrai R$10 de cada corte
                 });
             });
 
