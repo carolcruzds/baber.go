@@ -314,3 +314,7 @@ button {
 button:hover {
     background-color: #005fa3;
 }
+
+#map {
+    height: 1000px;
+}

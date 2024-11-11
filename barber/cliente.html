@@ -180,21 +180,6 @@
         <section>
             <h2>Mapa de Localização</h2>
             <div id="map"></div>
-            <script>
-                function initMap() {
-                    const map = new google.maps.Map(document.getElementById("map"), {
-                        zoom: 12,
-                        center: { lat: -22.970722, lng: -43.182365 }, // Coordenadas do Rio de Janeiro
-                    });
-                    const marker = new google.maps.Marker({
-                        position: { lat: -22.970722, lng: -43.182365 },
-                        map: map,
-                        title: "Barber.Go",
-                    });
-                }
-                
-            </script>
-            <script async defer src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117527.97571157666!2d-43.369210478895866!3d-22.99624677287117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bd574fa5a6cf9%3A0xcb4161d593d6f0dc!2sZona%20Sul%2C%20Rio%20de%20Janeiro%20-%20RJ!5e0!3m2!1spt-BR!2sbr!4v1730867033343!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></script>
         </section>
 
         <section>
@@ -206,4 +191,84 @@
 <footer>
     <p>&copy; 2024 Barber.Go. Todos os direitos reservados.</p>
 </footer>
+
+<!-- Importação do Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+<script>
+    // Inicializar mapa com localização padrão (Rio de Janeiro)
+    const map = L.map('map').setView([-22.9068, -43.1729], 13);
+    
+    // Tile layer do OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Lista de barbeiros com latitudes e longitudes
+    const barbers = [
+        { name: "João Silva", location: "Botafogo", lat: -22.9536, lng: -43.1964 },
+        { name: "Carlos Pereira", location: "Ipanema", lat: -22.9836, lng: -43.2065 },
+        { name: "Luiz Almeida", location: "Copacabana", lat: -22.9710, lng: -43.1825 },
+        { name: "Pedro Ramos", location: "Leblon", lat: -22.9856, lng: -43.2221 }
+    ];
+
+    // Adicionar marcadores dos barbeiros no mapa
+    function addBarberMarkers(filteredBarbers) {
+        filteredBarbers.forEach(barber => {
+            const marker = L.marker([barber.lat, barber.lng]).addTo(map);
+            marker.bindPopup(`<b>${barber.name}</b><br>${barber.location}`);
+        });
+    }
+
+    // Filtra os barbeiros e atualiza o mapa com os marcadores filtrados
+    function filterBarbers() {
+        const locationInput = document.getElementById("location").value.toLowerCase();
+        const priceInput = document.getElementById("price").value;
+
+        // Filtrar barbeiros por localização e preço
+        const filteredBarbers = barbers.filter(barber => {
+            const matchLocation = !locationInput || barber.location.toLowerCase().includes(locationInput);
+            const matchPrice = priceInput === "all"; // Simplifique para este exemplo
+
+            return matchLocation && matchPrice;
+        });
+
+        // Limpar os marcadores antigos e adicionar os novos filtrados
+        map.eachLayer(layer => {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        addBarberMarkers(filteredBarbers);
+
+        // Verifica se a Geolocation API está disponível para usar a localização do usuário
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          
+            console.log(position);
+
+          // Move o mapa para a localização do usuário
+          map.setView([latitude, longitude], 13);
+          
+          // Adiciona um marcador para a localização atual
+          L.marker([latitude, longitude]).addTo(map)
+          .bindPopup('Você está aqui.')
+          .openPopup();
+          
+          // Chama a função para buscar os cabeleireiros próximos
+          fetchNearbyHairdressers(latitude, longitude);
+          }, (error) => {
+          console.error('Erro ao obter localização:', error);
+          });
+          } else {
+          console.error('Geolocation não é suportada pelo navegador.');
+          }
+    }
+
+    // Carregar todos os barbeiros ao iniciar o mapa
+    addBarberMarkers(barbers);
+</script>
 </html>
