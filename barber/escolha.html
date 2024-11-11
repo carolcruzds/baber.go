@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber.Go - Escolha de Serviço</title>
+    <link rel="stylesheet" href="style/escolha.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        let selectedServices = [];
+
+        function toggleServiceSelection(service) {
+            const index = selectedServices.indexOf(service);
+            if (index === -1) {
+                selectedServices.push(service);
+            } else {
+                selectedServices.splice(index, 1);
+            }
+            updateServiceCard(service);
+        }
+
+        function updateServiceCard(service) {
+            const card = document.getElementById(`service-card-${service}`);
+            if (selectedServices.includes(service)) {
+                card.classList.add("selected");
+            } else {
+                card.classList.remove("selected");
+            }
+        }
+
+        function redirectToClientPage() {
+            if (selectedServices.length > 0) {
+                const queryParams = selectedServices.map(service => `service=${service}`).join('&');
+                window.location.href = `cliente.html?${queryParams}`;
+            } else {
+                alert("Por favor, selecione pelo menos um serviço.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <main class="container">
+        <h1>Escolha o Seu Serviço</h1>
+        <p>Selecione um ou mais serviços para prosseguir com o agendamento.</p>
+        
+        <section class="service-container">
+            <div class="service-card" id="service-card-corte" onclick="toggleServiceSelection('corte')">
+                <div class="service-icon"><i class="fas fa-cut"></i></div>
+                <div class="service-title">Corte de cabelo</div>
+                <div class="service-description">Selecionar corte de cabelo</div>
+            </div>
+    
+            <div class="service-card" id="service-card-barba" onclick="toggleServiceSelection('barba')">
+                <div class="service-icon"><i class="fas fa-razor"></i></div>
+                <div class="service-title">Barbear</div>
+                <div class="service-description">Selecionar barbear</div>
+            </div>
+    
+            <div class="service-card" id="service-card-sobrancelha" onclick="toggleServiceSelection('sobrancelha')">
+                <div class="service-icon"><i class="fas fa-eye"></i></div>
+                <div class="service-title">Sobrancelha</div>
+                <div class="service-description">Selecionar sobrancelha</div>
+            </div>
+    
+
+            <div class="service-card" id="service-card-massagem-facial" onclick="toggleServiceSelection('massagem-facial')">
+                <div class="service-icon"><i class="fas fa-spa"></i></div>
+                <div class="service-title">Massagem Facial</div>
+                <div class="service-description">Selecionar massagem facial</div>
+            </div>
+        </section>
+
+        <button class="confirm-button" onclick="redirectToClientPage()">Confirmar Seleção</button>
+    </main>
+</body>
+</html>

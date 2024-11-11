@@ -13,31 +13,39 @@
             const form = document.getElementById(`schedule-form-${barberId}`);
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
-        
-        function filterBarbers() {
+
+        function getQueryParameters() {
+            const params = new URLSearchParams(window.location.search);
+            return Array.from(params.entries())
+                        .filter(([key]) => key === 'service')
+                        .map(([, value]) => value);
+        }
+
+        function applyInitialServiceFilter() {
+            const selectedServices = getQueryParameters();
+            filterBarbers(selectedServices);
+        }
+
+        function filterBarbers(selectedServices = []) {
             const locationInput = document.getElementById("location").value.toLowerCase();
             const barberCards = document.querySelectorAll(".barber-card");
-            
+
             barberCards.forEach(card => {
                 const barberLocation = card.getAttribute("data-location").toLowerCase();
-                if (locationInput && barberLocation.includes(locationInput)) {
-                    card.style.display = "block";
-                } else if (locationInput) {
-                    card.style.display = "none";
-                } else {
-                    card.style.display = "block";
+                const barberServices = card.querySelector(".barber-details p:nth-of-type(3)").textContent.toLowerCase();
+                
+                let show = locationInput === '' || barberLocation.includes(locationInput);
+                if (selectedServices.length > 0) {
+                    show = show && selectedServices.some(service => barberServices.includes(service));
                 }
+                card.style.display = show ? "block" : "none";
             });
         }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            applyInitialServiceFilter();
+        });
     </script>
-    <style>
-        /* Adicionei um estilo básico para o mapa */
-        #map {
-            height: 400px;
-            width: 100%;
-            margin: 20px 0;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -46,60 +54,30 @@
             <div class="topo">
                 <p>Encontre o melhor barbeiro perto de você!</p>
             </div>
-            <label class="search-label">
-                <input type="text" name="text" class="input" required="" placeholder="Type here...">
-                <kbd class="slash-icon">/</kbd>
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 512 512" xml:space="preserve">
-                  <g>
-                    <path d="M55.146 51.887 41.588 37.786A22.926 22.926 0 0 0 46.984 23c0-12.682-10.318-23-23-23s-23 10.318-23 23 10.318 23 23 23c4.761 0 9.298-1.436 13.177-4.162l13.661 14.208c.571.593 1.339.92 2.162.92.779 0 1.518-.297 2.079-.837a3.004 3.004 0 0 0 .083-4.242zM23.984 6c9.374 0 17 7.626 17 17s-7.626 17-17 17-17-7.626-17-17 7.626-17 17-17z" fill="currentColor" data-original="#000000" class=""></path>
-                  </g>
-                </svg>
-              </label>
         </div>
     </header>
-    
+
     <main class="container">
         <section class="search-filters">
             <h2>Filtrar Barbeiros</h2>
             <form oninput="filterBarbers()">
                 <label class="search-label" for="location">Localização:
                     <input type="text" id="location" placeholder="Digite sua localização">
-                    <kbd class="slash-icon">/</kbd>
-                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512 ```html
-" x="0" y="0" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 512 512" xml:space="preserve">
-                      <g>
-                        <path d="M55.146 51.887 41.588 37.786A22.926 22.926 0 0 0 46.984 23c0-12.682-10.318-23-23-23s-23 10.318-23 23 10.318 23 23 23c4.761 0 9.298-1.436 13.177-4.162l13.661 14.208c.571.593 1.339.92 2.162.92.779 0 1.518-.297 2.079-.837a3.004 3.004 0 0 0 .083-4.242zM23.984 6c9.374 0 17 7.626 17 17s-7.626 17-17 17-17-7.626-17-17 7.626-17 17-17z" fill="currentColor" data-original="#000000" class=""></path>
-                      </g>
-                    </svg>
-                  </label>
-                
-                <label for="price">Faixa de preço:</label>
-                <select id="price">
-                    <option value="all">Todos</option>
-                    <option value="low">Até R$50</option>
-                    <option value="medium">R$50 - R$100</option>
-                    <option value="high">Acima de R$100</option>
-                </select>
-                
-                <label for="date">Data:</label>
-                <input type="date" id="date">
-                
-                <label for="time">Hora:</label>
-                <input type="time" id="time">
-                
+                </label>
                 <button type="button" onclick="filterBarbers()">Buscar</button>
+            
             </form>
         </section>
         
         <section class="top-barbers">
+            <!-- Lista de Barbeiros -->
             <div class="barber-card" data-location="Botafogo">
                 <div class="barber-info">
                     <img src="img/barber1.png" alt="Foto do Barbeiro 1" class="barber-photo">
                     <div class="barber-details">
                         <h3>João Silva</h3>
                         <p>Localização: Botafogo</p>
-                        <p>Classificação: ⭐⭐⭐⭐☆</p>
-                        <p>Portfólio: <a href="#">Ver mais</a></p>
+                        <p>Serviços: Corte, Barba, Corte e Barba</p>
                         <p>Valores: Corte - R$50, Barba - R$30, Corte e Barba - R$70</p>
                         <button onclick="toggleScheduleForm(1)">Agendar</button>
                     </div>
@@ -111,17 +89,17 @@
                     <input type="time" id="time-1">
                     <button type="submit">Confirmar Agendamento</button>
                 </div>
-            </div> 
+            </div>
 
+            <!-- Outros barbeiros com serviços e valores especificados -->
             <div class="barber-card" data-location="Ipanema">
                 <div class="barber-info">
                     <img src="img/barber2.png" alt="Foto do Barbeiro 2" class="barber-photo">
                     <div class="barber-details">
                         <h3>Carlos Pereira</h3>
                         <p>Localização: Ipanema</p>
-                        <p>Classificação: ⭐⭐⭐⭐⭐</p>
-                        <p>Portfólio: <a href="#">Ver mais</a></p>
-                        <p>Valores: Corte - R$60, Barba - R$40, Corte e Barba - R$90</p>
+                        <p>Serviços: Corte, Barba, Massagem Facial</p>
+                        <p>Valores: Corte - R$60, Barba - R$40, Massagem Facial - R$90</p>
                         <button onclick="toggleScheduleForm(2)">Agendar</button>
                     </div>
                 </div>
@@ -132,28 +110,28 @@
                     <input type="time" id="time-2">
                     <button type="submit">Confirmar Agendamento</button>
                 </div>
-            </div> 
+            </div>
 
- <div class="barber-card" data-location="Copacabana">
+            <div class="barber-card" data-location="Copacabana">
                 <div class="barber-info">
                     <img src="img/barber3.png" alt="Foto do Barbeiro 3" class="barber-photo">
                     <div class="barber-details">
                         <h3>Luiz Almeida</h3>
                         <p>Localização: Copacabana</p>
                         <p>Classificação: ⭐⭐⭐⭐☆</p>
-                        <p>Portfólio: <a href="#">Ver mais</a></p>
                         <p>Valores: Corte - R$55, Barba - R$35, Corte e Barba - R$80</p>
                         <button onclick="toggleScheduleForm(3)">Agendar</button>
                     </div>
                 </div>
                 <div id="schedule-form-3" class="schedule-form" style="display: none;">
                     <label for="date-3">Data:</label>
-                    <input type="date" id="date-3">
+                    <input type="date" id="date-2">
                     <label for="time-3">Horário:</label>
-                    <input type="time" id="time-3">
+                    <input type="time" id="time-2">
                     <button type="submit">Confirmar Agendamento</button>
                 </div>
-            </div> 
+            </div>
+            </div>
 
             <div class="barber-card" data-location="Leblon">
                 <div class="barber-info">
@@ -162,21 +140,190 @@
                         <h3>Pedro Ramos</h3>
                         <p>Localização: Leblon</p>
                         <p>Classificação: ⭐⭐⭐⭐⭐</p>
-                        <p>Portfólio: <a href="#">Ver mais</a></p>
                         <p>Valores: Corte - R$65, Barba - R$40, Corte e Barba - R$100</p>
                         <button onclick="toggleScheduleForm(4)">Agendar</button>
                     </div>
                 </div>
                 <div id="schedule-form-4" class="schedule-form" style="display: none;">
                     <label for="date-4">Data:</label>
-                    <input type="date" id="date-4">
+                    <input type="date" id="date-2">
                     <label for="time-4">Horário:</label>
-                    <input type="time" id="time-4">
+                    <input type="time" id="time-2">
                     <button type="submit">Confirmar Agendamento</button>
                 </div>
-            </div> 
-        </section>
+            </div>
+            </div>
+            
+            <!-- Novos barbeiros -->
+            <div class="barber-card" data-location="Flamengo">
+                <div class="barber-info">
+                    <img src="img/barber5.png" alt="Foto do Barbeiro 5" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Marcos Souza</h3>
+                        <p>Localização: Flamengo</p>
+                        <p>Classificação: ⭐⭐⭐⭐☆</p>
+                        <p>Valores: Corte - R$52, Barba - R$38, Corte e Barba - R$85</p>
+                        <button onclick="toggleScheduleForm(5)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-5" class="schedule-form" style="display: none;">
+                    <label for="date-5">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-5">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
 
+            <div class="barber-card" data-location="Laranjeiras">
+                <div class="barber-info">
+                    <img src="img/barber6.png" alt="Foto do Barbeiro 6" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Lucas Vieira</h3>
+                        <p>Localização: Laranjeiras</p>
+                        <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                        <p>Valores: Corte - R$58, Barba - R$42, Corte e Barba - R$95</p>
+                        <button onclick="toggleScheduleForm(6)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-6" class="schedule-form" style="display: none;">
+                    <label for="date-6">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-6">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+        </div>
+            </div>
+
+            <div class="barber-card" data-location="Santa Teresa">
+                <div class="barber-info">
+                    <img src="img/barber7.png" alt="Foto do Barbeiro 7" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Antonio Nunes</h3>
+                        <p>Localização: Santa Teresa</p>
+                        <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                        <p>Valores: Corte - R$60, Barba - R$45, Corte e Barba - R$100</p>
+                        <button onclick="toggleScheduleForm(7)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-7" class="schedule-form" style="display: none;">
+                    <label for="date-7">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-7">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="barber-card" data-location="São Conrado">
+                <div class="barber-info">
+                    <img src="img/barber8.png" alt="Foto do Barbeiro 8" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Roberto Melo</h3>
+                        <p>Localização: São Conrado</p>
+                        <p>Classificação: ⭐⭐⭐⭐☆</p>
+                        <p>Valores: Corte - R$57, Barba - R$37, Corte e Barba - R$87</p>
+                        <button onclick="toggleScheduleForm(8)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-8" class="schedule-form" style="display: none;">
+                    <label for="date-8">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-8">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="barber-card" data-location="Glória">
+                <div class="barber-info">
+                    <img src="img/barber9.png" alt="Foto do Barbeiro 9" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Eduardo Silva</h3>
+                        <p>Localização: Glória</p>
+                        <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                        <p>Valores: Corte - R$54, Barba - R$34, Corte e Barba - R$78</p>
+                        <button onclick="toggleScheduleForm(9)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-9" class="schedule-form" style="display: none;">
+                    <label for="date-9">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-9">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="barber-card" data-location="Urca">
+                <div class="barber-info">
+                    <img src="img/barber10.png" alt="Foto do Barbeiro 10" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>André Lima</h3>
+                        <p>Localização: Urca</p>
+                        <p>Classificação: ⭐⭐⭐⭐☆</p>
+                        <p>Valores: Corte - R$53, Barba - R$32, Corte e Barba - R$80</p>
+                        <button onclick="toggleScheduleForm(10)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-10" class="schedule-form" style="display: none;">
+                    <label for="date-10">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-10">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="barber-card" data-location="Gávea">
+                <div class="barber-info">
+                    <img src="img/barber11.png" alt="Foto do Barbeiro 11" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Fábio Costa</h3>
+                        <p>Localização: Gávea</p>
+                        <p>Classificação: ⭐⭐⭐⭐⭐</p>
+                        <p>Valores: Corte - R$61, Barba - R$41, Corte e Barba - R$90</p>
+                        <button onclick="toggleScheduleForm(11)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-11" class="schedule-form" style="display: none;">
+                    <label for="date-11">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-11">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="barber-card" data-location="Leme">
+                <div class="barber-info">
+                    <img src="img/barber12.png" alt="Foto do Barbeiro 12" class="barber-photo">
+                    <div class="barber-details">
+                        <h3>Renato Farias</h3>
+                        <p>Localização: Leme</p>
+                        <p>Classificação: ⭐⭐⭐⭐☆</p>
+                        <p>Valores: Corte - R$59, Barba - R$36, Corte e Barba - R$85</p>
+                        <button onclick="toggleScheduleForm(12)">Agendar</button>
+                    </div>
+                </div>
+                <div id="schedule-form-12" class="schedule-form" style="display: none;">
+                    <label for="date-12">Data:</label>
+                    <input type="date" id="date-2">
+                    <label for="time-12">Horário:</label>
+                    <input type="time" id="time-2">
+                    <button type="submit">Confirmar Agendamento</button>
+                </div>
+            </div>
+            </div>
+        </section>
         <section>
             <h2>Mapa de Localização</h2>
             <div id="map"></div>
@@ -197,23 +344,27 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
 <script>
-    // Inicializar mapa com localização padrão (Rio de Janeiro)
     const map = L.map('map').setView([-22.9068, -43.1729], 13);
     
-    // Tile layer do OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Lista de barbeiros com latitudes e longitudes
     const barbers = [
         { name: "João Silva", location: "Botafogo", lat: -22.9536, lng: -43.1964 },
         { name: "Carlos Pereira", location: "Ipanema", lat: -22.9836, lng: -43.2065 },
         { name: "Luiz Almeida", location: "Copacabana", lat: -22.9710, lng: -43.1825 },
-        { name: "Pedro Ramos", location: "Leblon", lat: -22.9856, lng: -43.2221 }
+        { name: "Pedro Ramos", location: "Leblon", lat: -22.9856, lng: -43.2221 },
+        { name: "Marcos Souza", location: "Flamengo", lat: -22.9367, lng: -43.1768 },
+        { name: "Lucas Vieira", location: "Laranjeiras", lat: -22.9469, lng: -43.1821 },
+        { name: "Antonio Nunes", location: "Santa Teresa", lat: -22.9201, lng: -43.1842 },
+        { name: "Roberto Melo", location: "São Conrado", lat: -22.9911, lng: -43.2351 },
+        { name: "Eduardo Silva", location: "Glória", lat: -22.9155, lng: -43.1767 },
+        { name: "André Lima", location: "Urca", lat: -22.9527, lng: -43.1666 },
+        { name: "Fábio Costa", location: "Gávea", lat: -22.9794, lng: -43.2346 },
+        { name: "Renato Farias", location: "Leme", lat: -22.9643, lng: -43.1689 }
     ];
 
-    // Adicionar marcadores dos barbeiros no mapa
     function addBarberMarkers(filteredBarbers) {
         filteredBarbers.forEach(barber => {
             const marker = L.marker([barber.lat, barber.lng]).addTo(map);
@@ -221,54 +372,6 @@
         });
     }
 
-    // Filtra os barbeiros e atualiza o mapa com os marcadores filtrados
-    function filterBarbers() {
-        const locationInput = document.getElementById("location").value.toLowerCase();
-        const priceInput = document.getElementById("price").value;
-
-        // Filtrar barbeiros por localização e preço
-        const filteredBarbers = barbers.filter(barber => {
-            const matchLocation = !locationInput || barber.location.toLowerCase().includes(locationInput);
-            const matchPrice = priceInput === "all"; // Simplifique para este exemplo
-
-            return matchLocation && matchPrice;
-        });
-
-        // Limpar os marcadores antigos e adicionar os novos filtrados
-        map.eachLayer(layer => {
-            if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
-            }
-        });
-
-        addBarberMarkers(filteredBarbers);
-
-        // Verifica se a Geolocation API está disponível para usar a localização do usuário
-        if ('geolocation' in navigator) {
-          navigator.geolocation.getCurrentPosition((position) => {
-          const { latitude, longitude } = position.coords;
-          
-            console.log(position);
-
-          // Move o mapa para a localização do usuário
-          map.setView([latitude, longitude], 13);
-          
-          // Adiciona um marcador para a localização atual
-          L.marker([latitude, longitude]).addTo(map)
-          .bindPopup('Você está aqui.')
-          .openPopup();
-          
-          // Chama a função para buscar os cabeleireiros próximos
-          fetchNearbyHairdressers(latitude, longitude);
-          }, (error) => {
-          console.error('Erro ao obter localização:', error);
-          });
-          } else {
-          console.error('Geolocation não é suportada pelo navegador.');
-          }
-    }
-
-    // Carregar todos os barbeiros ao iniciar o mapa
     addBarberMarkers(barbers);
 </script>
 </html>

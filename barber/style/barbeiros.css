@@ -149,3 +149,25 @@ footer {
     transform: scale(1.1); /* Aumenta o tamanho para 110% */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
+
+        /* Estilo básico para o mapa */
+    #map {
+    height: 400px;
+    width: 100%;
+    margin: 20px 0;
+        }
+        
+        /* Efeito de hover nos cartões */
+        .barber-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .barber-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
