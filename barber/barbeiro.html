@@ -11,25 +11,27 @@
 </head>
 <body>
     <header>
-        <div class="header-content">
+        <div class="header-left">
             <img src="img/barber.png" alt="Logo Barber.Go" class="logo">
-            <div class="top-bar">
-                <div class="profile">
-                    <img src="img/barber1.png" alt="Foto do Barbeiro" class="barber-photo">
-                    <p>Bem-vindo, <strong>Barbeiro João</strong></p>
-                    <p><a href="#">Sair</a></p>
-                </div>
-                <div class="info">
-                    <p>Saldo Total (após desconto): R$<span id="total-ganhos">0,00</span></p>
-                </div>
+        </div>
+        <div class="header-right">
+            <div class="profile">
+                <img src="img/barber1.png" alt="Foto do Barbeiro" class="barber-photo">
+                <p>Bem-vindo, <strong>Barbeiro João</strong></p>
             </div>
+            <div class="info">
+                <p>Saldo Total (após desconto): R$<span id="total-ganhos">0,00</span></p>
+            </div>
+            <a href="index.html" class="logout">Sair</a>
         </div>
     </header>
+    
     
     <main class="container">
         <section class="overview">
             <h2>Seus Clientes</h2>
             <p>Acompanhe seus clientes, veja o total de ganhos e detalhes dos serviços realizados.</p>
+            <button onclick="addCustomer()">Adicionar Cliente</button> <!-- Botão para adicionar um novo cliente -->
         </section>
         
         <section class="customers-list">
@@ -98,6 +100,54 @@
 
         // Chamar a função ao carregar a página
         window.onload = calcularGanhos;
+   
+    function addCustomer() {
+        const customerList = document.getElementById("customers-list");
+
+        // Criando o elemento de cartão de cliente
+        const customerCard = document.createElement("div");
+        customerCard.classList.add("customer-card");
+
+        // Adicionando conteúdo ao novo cartão
+        customerCard.innerHTML = `
+            <div class="customer-info">
+                <h3>Ana Souza</h3>
+                <p>Localização: Copacabana</p>
+                <p>Classificação: ⭐⭐⭐⭐</p>
+                <p>Total Gasto no Mês: R$200</p>
+            </div>
+            <table class="service-table">
+                <thead>
+                    <tr>
+                        <th>Serviço</th>
+                        <th>Data</th>
+                        <th>Preço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Corte</td>
+                        <td>08/10/2023</td>
+                        <td>R$60</td>
+                    </tr>
+                    <tr>
+                        <td>Barba</td>
+                        <td>12/10/2023</td>
+                        <td>R$40</td>
+                    </tr>
+                    <tr>
+                        <td>Corte e Barba</td>
+                        <td>18/10/2023</td>
+                        <td>R$100</td>
+                    </tr>
+                </tbody>
+            </table>
+        `;
+
+        // Adicionando o novo cartão à lista de clientes
+        customerList.appendChild(customerCard);
+    }
+
     </script>
 </body>
 </html>
